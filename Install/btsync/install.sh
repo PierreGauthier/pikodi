@@ -1,8 +1,12 @@
 #!/bin/sh
 
-#https://blog.getsync.com/2015/09/04/sync-wd-raspberry-pi/
-
-wget https://download-cdn.getsync.com/2.0.128/PiWD/bittorrent-sync-pi-server_2.0.128_armhf.deb
-sudo dpkg -i bittorrent-sync-pi-server_2.0.128_armhf.deb
-
-echo 'btsync installed as a service (port 8888)'
+sudo rm /etc/apt/sources.list.d/btsync.list
+sudo touch /etc/apt/sources.list.d/btsync.list
+sudo chmod 777 /etc/apt/sources.list.d/btsync.list
+sudo echo "deb http://debian.yeasoft.net/btsync wheezy main contrib non-free" >> /etc/apt/sources.list.d/btsync.list
+sudo echo "deb-src http://debian.yeasoft.net/btsync wheezy main contrib non-free" >> /etc/apt/sources.list.d/btsync.list
+sudo apt-get update > /dev/null
+echo "Interractive btsync install"
+echo "execute : Interractive btsync install"
+echo "(do not use symb link for dd)"
+echo "port: 8888"
