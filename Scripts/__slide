@@ -1,0 +1,97 @@
+#!/bin/bash
+
+echo '#EXTM3U' > /tmp/slidepl.m3u
+count=0
+
+if [ $# -eq 1 ]
+then
+    wget http://fuskator.com/search/$1 -O /tmp/tut &> /dev/null
+    str=$(cat /tmp/tut)
+    str=${str#*<span>...</span>}
+    str=${str:0:100}
+    str=${str#*/\">}
+    str=${str%</a> <a*}
+
+    echo $str
+
+    re='^[0-9]+$'
+    if  [[ $str =~ $re ]] ; then
+        num=$(shuf -i 1-$str -n 1)
+        echo url_pages="http://fuskator.com/page/$num/$1"
+        wget http://fuskator.com/page/$num/$1 -O /tmp/tut &> /dev/null
+    fi
+
+    str=$(cat /tmp/tut)
+    str=${str#*class=\"thumblinks\"}
+    str=${str%PAGES*}
+
+    str=${str//"/full/"/"µ/full/"}
+    str=${str//".html"/".htmlµ'"}
+    str=$(echo $str | tr 'µ' '\n')
+
+    for link in $str
+    do
+        if [[ $link == *"/full/"* ]]
+        then
+            links=("${links[@]}" "$link")
+        fi
+    done
+
+    for i in {1..10}
+    do
+        num=$(shuf -i 1-${#links[@]} -n 1)
+        echo '----------------------------------------------------------------'
+        wget "http://fuskator.com${links[$num]}" -O /tmp/test &> /dev/null
+        url=$(cat /tmp/test)
+        url=${url#*var}
+        url=${url:0:300}
+        url=${url%\');*}
+        url=${url#*unescape(\'}
+        url=${url//"%2f"/"/"}
+
+        echo "chosen gallery : $num : " $url
+
+        str=$(cat /tmp/test)
+        str=${str#*var}
+        str=${str%id=\"rate\"*}
+        str=${str//"+'"/"µ"}
+        str=${str//".jpg"/".jpgµ'"}
+        str=$(echo $str | tr 'µ' '\n')
+        for img in $str
+        do
+            if [[ $img == *".jpg"* ]]
+            then
+                echo "#EXTINF:$count,NN$count" >> /tmp/slidepl.m3u
+                echo "http:$url$img" >> /tmp/slidepl.m3u
+                count=$((count + 1))
+            fi
+        done
+    done
+else
+    echo '' > /tmp/slidepl.m3u
+    for i in {1..5}
+    do
+        wget http://fuskator.com/images/random/ -O /tmp/tada &> /dev/null
+
+        str=$(cat /tmp/tada)
+        str=${str#*<div class=\"wrapper\">}
+        str=${str%href=\"/gallery/random/\"*}
+        str=${str//"href','//"/'µ'}
+        str=${str//".jpg'"/'.jpgµ'}
+        str=${str//"'+'"/""}
+        links=$(echo $str | tr 'µ' '\n')
+
+        for link in $links
+        do
+            if [[ $link == *".jpg" ]]
+            then
+                echo "#EXTINF:$count,NN$count" >> /tmp/slidepl.m3u
+                echo "http://$link" >> /tmp/slidepl.m3u
+                count=$((count + 1))
+            fi
+        done
+    done
+fi
+
+scp /tmp/slidepl.m3u osmc@192.168.1.10:/tmp/
+ssh osmc@192.168.1.10 "xbmc-send --action='RecursiveSlideShow(/tmp/slidepl.m3u)'"

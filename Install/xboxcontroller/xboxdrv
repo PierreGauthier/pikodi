@@ -1,0 +1,22 @@
+#! /bin/sh
+# /etc/init.d/xboxdrv
+#
+
+# Carry out specific functions when asked to by the system
+case "$1" in
+start)
+    sudo rmmod xpad
+    sudo modprobe uinput
+    sudo modprobe joydev
+    sudo /usr/bin/xboxdrv --config /home/osmc/xbmc.ini --silent --autofire RT=25 --autofire LT=25 --autofire du=200 --autofire dd=200 --autofire dl=500 --autofire dr=500 &    
+    ;;
+stop)
+    killall xboxdrv
+    ;;
+*)
+    echo "Usage: /etc/init.d/xboxdrv {start|stop}"
+    exit 1
+    ;;
+esac
+
+exit 0

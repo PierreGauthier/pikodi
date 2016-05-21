@@ -1,0 +1,72 @@
+#!/bin/sh
+
+
+if [ $# -eq 0 ]
+then
+	netsh interface ipv4 show config | iconv -f cp437 -t utf-8
+elif [ $1 == "-h" ]
+then
+	echo "Usage: ip [set iface_name ip [gateway [mask [dns]]]]"
+	echo "       ip [unset iface_name ip [gateway [mask [dns]]]]"
+	echo "       ip hotspot start ssid passwd | stop"
+elif [ $1 == "set" ]
+then
+	iface=$2
+	if [ $2 == "lan" ]
+	then 
+		iface="Ethernet"
+	elif [ $2 == "wlan" ]
+	then	
+		iface="Wi-fi"
+	fi
+	if [ $# -eq 3 ]
+	then
+		netsh int ip set address $iface static $3 255.255.255.0 $3 1
+	elif [ $# -eq 4 ]
+	then
+		netsh int ip set address $iface static $3 255.255.255.0 $4 1
+	elif [ $# -eq 5 ]
+	then
+		netsh int ip set address $iface static $3 $5 $4 1
+	elif [ $# -eq 6 ]
+	then
+		netsh int ip set address $iface static $3 $5 $4 1
+		netsh int ip set dns $iface static $6 primary
+	fi
+elif [ $1 == "unset" ]
+then
+	iface=$2
+	if [ $2 == "lan" ]
+	then 
+		iface="Ethernet"
+	elif [ $2 == "wlan" ]
+	then	
+		iface="Wi-fi"
+	fi
+	netsh int ip set address $iface dhcp > /dev/null
+	netsh int ip set dns $iface dhcp > /dev/null
+	ipconfig /release $iface > /dev/null
+	ipconfig /renew $iface > /dev/null
+	ip $iface
+elif [ $1 == "hotspot" ]
+then
+	if [ $2 == "start" ]
+	then
+		netsh wlan set hostednetwork mode=allow ssid=$3 key=$4
+		netsh wlan start hostednetwork
+		echo "Hotspot $3 started"
+	else
+		netsh wlan stop hostednetwork
+		echo "hotspot stopped"
+	fi
+else
+	iface=$1
+	if [ $1 == "lan" ]
+	then 
+		iface="Ethernet"
+	elif [ $1 == "wlan" ]
+	then
+		iface="Wi-fi"
+	fi
+	netsh interface ipv4 show config "$iface" | iconv -f cp437 -t utf-8
+fi
