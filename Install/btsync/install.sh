@@ -1,12 +1,8 @@
 #!/bin/sh
 
-sudo rm /etc/apt/sources.list.d/btsync.list
-sudo touch /etc/apt/sources.list.d/btsync.list
-sudo chmod 777 /etc/apt/sources.list.d/btsync.list
-sudo echo "deb http://debian.yeasoft.net/btsync wheezy main contrib non-free" >> /etc/apt/sources.list.d/btsync.list
-sudo echo "deb-src http://debian.yeasoft.net/btsync wheezy main contrib non-free" >> /etc/apt/sources.list.d/btsync.list
-sudo apt-get update > /dev/null
+sudo add-apt-repository ppa:tuxpoldo/btsync
+sudo apt-get update
 echo "Interractive btsync install"
-echo "execute : Interractive btsync install"
-echo "(do not use symb link for dd)"
+echo "execute : sudo apt-get install btsync"
+echo "(do not use symb link for dd, use /media/E4F6D826F6D7F730/)"
 echo "port: 8888"
