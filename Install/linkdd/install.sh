@@ -4,7 +4,7 @@ ln -s /media/E4F6D826F6D7F730/ /home/osmc/dd
 ln -s /media/E4F6D826F6D7F730/Backup/Pikodi /home/osmc/bu
 
 rm -r /home/osmc/Music
-ln -s dd/Musics Music
+ln -s dd/Music Music
 
 rm -r /home/osmc/Pictures
 ln -s dd/Images Pictures

@@ -19,8 +19,7 @@ ssh -t "$pikodiUser@$pikodiIp" "$script"
 hasError=$?
 if [ $hasError != 0 ]
 then
-    echo -e "Install $D \e[31mError ($hasErrpr)\e[0m"
-    echo -e "\e[33m$msg\e[0m"
+    echo -e "Install $D \e[31mError \e[0m"
 else
     echo -e "Install $D \e[32mOK\e[0m"
 fi
