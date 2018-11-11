@@ -1,0 +1,19 @@
+---
+- name: Install xbox controller (1/4)
+  apt:
+    name: xboxdrv
+  environment:
+    PATH: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+- name: Install xbox controller (2/4)
+  copy:
+    src: /src/xboxcontroller/xbmc.ini
+    dest: /home/osmc/xbmc.ini
+
+- name: Install xbox controller (3/4)
+  copy:
+    src: /src/xboxcontroller/xboxdrv
+    dest: /etc/init.d/xboxdrv
+
+- name: Install xbox controller (4/4)
+  command : /usr/sbin/update-rc.d xboxdrv defaults

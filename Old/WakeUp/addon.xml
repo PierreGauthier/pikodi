@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.wakeup" name="Wake Up" version="1.0.0" provider-name="PierreGauthier">
+	<requires>
+		<import addon="xbmc.python" version="2.14.0"/>
+		<import addon="service.cronxbmc" version="0.0.4" />
+	</requires>
+	<extension point="xbmc.service" library="service.py" start="login" />
+	<extension point="xbmc.python.script" library="addon.py">
+		<provides>executable</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<platform>all</platform>
+		<summary lang="en">Advanced alarm clock.</summary>
+		<description lang="en">Advanced alarm clock with music, video and slideshow.</description>
+		<license>GNU General Public License, v2</license>
+		<language></language>
+		<source>https://github.com/PierreGauthier/WakeUp</source>
+	</extension>
+</addon>

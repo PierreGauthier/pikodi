@@ -1,0 +1,23 @@
+---
+- name: "Link dd (1/2)"
+  file:
+    path: "{{ item }}"
+    state: absent
+  with_items:
+    - /home/osmc/Music
+    - /home/osmc/Pictures
+    - /home/osmc/TV Shows
+    - /home/osmc/Movies
+
+- name: "Link dd (2/2)"
+  file:
+    src: "{{item.src}}"
+    dest: "{{item.dest}}"
+    state: link
+  with_items:
+    - { src: '/media/E4F6D826F6D7F730/', dest: '/home/osmc/dd' }
+    - { src: '/home/osmc/dd/Music', dest: '/home/osmc/Music' }
+    - { src: '/home/osmc/dd/Images', dest: '/home/osmc/Pictures' }
+    - { src: '/home/osmc/dd/Films', dest: '/home/osmc/Movies' }
+    - { src: '/home/osmc/dd/Series', dest: '/home/osmc/TV Shows' }
+    # - { src: '/home/osmc/.kodi/userdata/addon_data/plugin.video.netflix/shows/', dest: '/home/osmc/TV Shows/Netflix' }

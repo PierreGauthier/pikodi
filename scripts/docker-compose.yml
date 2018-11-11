@@ -1,0 +1,11 @@
+version: "3.3"
+
+services:
+  ansible:
+    build: images/ansible
+    volumes:
+      - ./install:/src
+      - ./etc:/etc/ansible
+    environment:
+      - LC_ALL=C.UTF-8
+      - LANG=C.UTF-8

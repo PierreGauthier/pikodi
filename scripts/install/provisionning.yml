@@ -1,0 +1,23 @@
+---
+- name: Install Pikodi utils on Osmc distribution
+  hosts: all
+  become: true
+
+  tasks:
+    # - name: "Install docker"
+    #   apt:
+    #     name: docker
+
+    # - include: /src/xboxcontroller/play.yml
+    # - include: /src/linkdd/play.yml
+
+    - name: "Restart raspberry"
+      shell: "sleep 5 && /sbin/reboot"
+      async: true
+      poll: 0
+    - name: Waiting for the raspberry to boot ...
+      wait_for_connection:
+        connect_timeout: 20
+        sleep: 5
+        delay: 5
+        timeout: 2000
