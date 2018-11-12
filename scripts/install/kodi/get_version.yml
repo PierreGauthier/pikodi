@@ -1,0 +1,5 @@
+- name: "Get kodi version (1/2)"
+  shell: kodi --version | head -n1 | sed -e "s/\(.*\) Media Center Kodi/\1/g"
+  register: kodi_version
+- name: "Get kodi version (2/2)"
+  set_fact: kodi_version={{ kodi_version.stdout }}

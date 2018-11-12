@@ -5,3 +5,12 @@ revenge-group:
       ansible_host: 192.168.1.1
       ansible_user: osmc
       ansible_password: osmc
+
+  vars:
+    addons:
+      - name:     youtube
+        url:      http://mirrors.kodi.tv/addons/krypton/plugin.video.youtube/plugin.video.youtube-6.2.2.zip
+        package:  plugin.video.youtube-6.2.2
+        code:     plugin.video.youtube
+        additionnal_cmds:
+          - kodi-send --action="ActivateWindow(Videos, plugin://plugin.video.youtube/sign-in)"

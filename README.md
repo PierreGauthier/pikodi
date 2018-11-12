@@ -10,4 +10,14 @@
    - DNS2 : 8.8.8.8
 - [ ] - Insert the sd card in the rapsberry and run the installation
   - Choose `revenge` as hostname
-- [ ] - Run ansible provisionning script `./scripts/install.sh`
+- [ ] - Run ansible provisionning script `./scripts/install.sh`, it will:
+  - Install osmc with kodi 18 alpha
+  - TODO Install docker
+  - Create symlink to external dd
+  - Install and configure xbox controller
+  - Install kodi addons:
+    - Youtube
+    - TODO Netflix
+    - TODO tunein
+    - TODO soundcloud
+  - TODO Auto add library sources (youtube, netflix, dd, ...)

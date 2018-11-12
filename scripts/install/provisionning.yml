@@ -3,21 +3,32 @@
   hosts: all
   become: true
 
+  environment:
+    PATH: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
   tasks:
+
+    # - include: /src/kodi/get_version.yml
+    # - include: /src/kodi/alpha_18.yml
+    #   when: kodi_version is version('18', '<')
+
     # - name: "Install docker"
     #   apt:
     #     name: docker
 
     # - include: /src/xboxcontroller/play.yml
     # - include: /src/linkdd/play.yml
+    # - include: /src/addon/play.yml
+    #   with_items: "{{addons}}"
 
-    - name: "Restart raspberry"
-      shell: "sleep 5 && /sbin/reboot"
-      async: true
-      poll: 0
-    - name: Waiting for the raspberry to boot ...
-      wait_for_connection:
-        connect_timeout: 20
-        sleep: 5
-        delay: 5
-        timeout: 2000
+    # - name: "Restart raspberry"
+    #   shell: "sleep 5 && /sbin/reboot"
+    #   async: true
+    #   poll: 0
+    #
+    # - name: Waiting for the raspberry to boot ...
+    #   wait_for_connection:
+    #     connect_timeout: 20
+    #     sleep: 5
+    #     delay: 5
+    #     timeout: 2000
