@@ -1,18 +1,35 @@
 
-# - name: "Install {{item.name}} (1/3)"
-#   get_url:
-#     url: "{{item.url}}"
-#     dest: "/home/osmc/.kodi/addons/packages/{{item.package}}"
-# - name: "Install {{item.name}} (2/3)"
-#   command: "unzip /home/osmc/.kodi/addons/packages/{{item.package}}.zip -d /home/osmc/.kodi/addons/"
-#   args:
-#     warn: false
-- name: "Install {{item.name}} (3/3)"
+- name: Check plugin is installed
+  stat:
+    path: "/home/osmc/.kodi/addons/{{item.code}}"
+  register: plugin_folder
+
+- name: "Install {{item.name}} (1/4)"
+  get_url:
+    url: "{{item.url}}"
+    dest: "/home/osmc/.kodi/addons/packages/"
+  when: plugin_folder.stat.exists == false
+
+- name: "Install {{item.name}} (2/4)"
+  unarchive:
+    src: "/home/osmc/.kodi/addons/packages/{{item.zip_name}}.zip"
+    dest: /home/osmc/.kodi/addons/
+    remote_src: yes
+  when: plugin_folder.stat.exists == false
+
+- name: "Install {{item.name}} (2.5/4)"
+  command: "mv /home/osmc/.kodi/addons/{{item.zip_name}} /home/osmc/.kodi/addons/{{item.code}}"
+  when: plugin_folder.stat.exists == false and item.zip_name != item.code
+
+- name: "Install {{item.name}} (3/4)"
   file:
     path: "/home/osmc/.kodi/addons/{{item.code}}"
     owner: osmc
     group: osmc
     mode: 0755
     recurse: true
-# - name: "Install {{item.name}} (3/3)"
-#   command: kodi-send --action="InstallAddon(plugin.video.youtube)"
+  when: plugin_folder.stat.exists == false
+
+- name: "Install {{item.name}} (4/4)"
+  command: "kodi-send --action='InstallAddon({{item.code}})'"
+  when: plugin_folder.stat.exists == false

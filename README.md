@@ -15,8 +15,8 @@
   - TODO Install docker
   - Create symlink to external dd
   - Install and configure xbox controller
-  - Install kodi addons:
-    - Youtube
+  - Install kodi addons: (TODO auto click yes on install prompt in kodi)
+    - Youtube (TODO login)
     - TODO Netflix
     - TODO tunein
     - TODO soundcloud

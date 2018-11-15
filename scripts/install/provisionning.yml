@@ -16,10 +16,32 @@
     #   apt:
     #     name: docker
 
+    - name: Stop osmc
+      service:
+        name: mediacenter
+        state: stopped
+
+    - name: Install dependecies (1/2)
+      apt:
+        name: "{{requested_apt_packages}}"
+    - name: Install dependecies (2/2)
+      pip:
+        name: "{{requested_pip_packages}}"
+        state: latest
+
     # - include: /src/xboxcontroller/play.yml
+
     # - include: /src/linkdd/play.yml
-    # - include: /src/addon/play.yml
-    #   with_items: "{{addons}}"
+
+    - name: "Install Addons"
+      include: /src/addon/play.yml
+      with_items: "{{addons}}"
+
+
+    - name: Start osmc
+      service:
+        name: mediacenter
+        state: started
 
     # - name: "Restart raspberry"
     #   shell: "sleep 5 && /sbin/reboot"

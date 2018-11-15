@@ -7,10 +7,26 @@ revenge-group:
       ansible_password: osmc
 
   vars:
+    requested_apt_packages:
+      - python-crypto
+      - build-essential
+      - python-pip
+      - virtualenv
+      - unzip
+    requested_pip_packages:
+      - setuptools
+      - wheel
+      - pycryptodomex
     addons:
       - name:     youtube
         url:      http://mirrors.kodi.tv/addons/krypton/plugin.video.youtube/plugin.video.youtube-6.2.2.zip
-        package:  plugin.video.youtube-6.2.2
         code:     plugin.video.youtube
+        zip_name: plugin.video.youtube
         additionnal_cmds:
           - kodi-send --action="ActivateWindow(Videos, plugin://plugin.video.youtube/sign-in)"
+      - name:     netflix
+        url:      https://github.com/asciidisco/plugin.video.netflix/archive/0.13.17.zip
+        code:     plugin.video.netflix
+        zip_name: plugin.video.netflix-0.13.17
+        dependecies:
+          -
