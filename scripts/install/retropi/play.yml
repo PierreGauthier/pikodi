@@ -1,0 +1,21 @@
+---
+- name: "Install RetroPie (1/4)"
+  file:
+    path: /home/osmc/RetroPie/scripts
+    state: directory
+
+- name: "Install RetroPie (1/4)"
+  copy:
+    src: "{{ script }}"
+    dest: /home/osmc/RetroPie/scripts
+    mode: 0755
+  loop: # scripts without dialog
+    - install-retrosmc.sh #https://raw.githubusercontent.com/mcobit/retrosmc/master/install-retrosmc.sh
+    - retropie.sh #https://raw.githubusercontent.com/mcobit/retrosmc/master/scripts/retropie.sh
+    - retropie_watchdog.sh #https://raw.githubusercontent.com/mcobit/retrosmc/master/scripts/retropie_watchdog.sh
+  loop_control:
+    loop_var: script
+
+# - name: "Install RetroPi (3/4)"
+#   shell: "/home/osmc/install-retrosmc.sh"
+#   become_user: osmc

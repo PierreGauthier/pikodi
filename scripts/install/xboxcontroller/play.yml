@@ -16,3 +16,7 @@
 
 - name: Install xbox controller (4/4)
   command : /usr/sbin/update-rc.d xboxdrv defaults
+
+- service:
+    name: xboxdrv
+    state: restarted

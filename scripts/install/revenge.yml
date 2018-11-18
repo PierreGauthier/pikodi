@@ -21,7 +21,7 @@ revenge-group:
       - name:     youtube
         url:      http://mirrors.kodi.tv/addons/krypton/plugin.video.youtube/plugin.video.youtube-6.2.2.zip
         code:     plugin.video.youtube
-        zip_name: plugin.video.youtube
+        zip_name: plugin.video.youtube-6.2.2
         additionnal_cmds:
           - kodi-send --action="ActivateWindow(Videos, plugin://plugin.video.youtube/sign-in)"
       - name:     netflix
@@ -29,4 +29,10 @@ revenge-group:
         code:     plugin.video.netflix
         zip_name: plugin.video.netflix-0.13.17
         dependecies:
-          -
+          - http://ftp.fau.de/osmc/osmc/download/kodi/addons/leia/script.module.certifi/script.module.certifi-2017.07.27.1.zip
+          - http://ftp.fau.de/osmc/osmc/download/kodi/addons/leia/script.module.chardet/script.module.chardet-3.0.4.zip
+          - http://ftp.fau.de/osmc/osmc/download/kodi/addons/leia/script.module.idna/script.module.idna-2.6.zip
+          - http://ftp.fau.de/osmc/osmc/download/kodi/addons/leia/script.module.urllib3/script.module.urllib3-1.22.zip
+          - http://ftp.fau.de/osmc/osmc/download/kodi/addons/leia/script.module.requests/script.module.requests-2.19.1.zip
+          - http://ftp.fau.de/osmc/osmc/download/kodi/addons/leia/script.module.inputstreamhelper/script.module.inputstreamhelper-0.3.3.zip
+          - http://ftp.fau.de/osmc/osmc/download/kodi/addons/leia/script.module.addon.signals/script.module.addon.signals-0.0.3.zip

@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/sh
 # /etc/init.d/xboxdrv
 #
 
@@ -8,7 +8,7 @@ start)
     sudo rmmod xpad
     sudo modprobe uinput
     sudo modprobe joydev
-    sudo /usr/bin/xboxdrv --config /home/osmc/xbmc.ini --silent --autofire RT=25 --autofire LT=25 --autofire du=200 --autofire dd=200 --autofire dl=500 --autofire dr=500 &    
+    sudo /usr/bin/xboxdrv --led 0 --config /home/osmc/xbmc.ini --silent --autofire RT=25 --autofire LT=25 --autofire du=200 --autofire dd=200 --autofire dl=500 --autofire dr=500 &
     ;;
 stop)
     killall xboxdrv
