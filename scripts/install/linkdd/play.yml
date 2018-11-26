@@ -1,23 +1,13 @@
 ---
-- name: "Link dd (1/2)"
+- name: "Lilllnk dd (1/2)"
   file:
-    path: "{{ item }}"
+    path: "{{ item.split(':')[1] }}"
     state: absent
-  loop:
-    - /home/osmc/Music
-    - /home/osmc/Pictures
-    - /home/osmc/TV Shows
-    - /home/osmc/Movies
+  loop: "{{ links }}"
 
 - name: "Link dd (2/2)"
   file:
-    src: "{{item.src}}"
-    dest: "{{item.dest}}"
+    src: "{{ item.split(':')[0] }}"
+    dest: "{{ item.split(':')[1] }}"
     state: link
-  loop:
-    - { src: '/media/E4F6D826F6D7F730/', dest: '/home/osmc/dd' }
-    - { src: '/home/osmc/dd/Music', dest: '/home/osmc/Music' }
-    - { src: '/home/osmc/dd/Images', dest: '/home/osmc/Pictures' }
-    - { src: '/home/osmc/dd/Films', dest: '/home/osmc/Movies' }
-    - { src: '/home/osmc/dd/Series', dest: '/home/osmc/TV Shows' }
-    # - { src: '/home/osmc/.kodi/userdata/addon_data/plugin.video.netflix/shows/', dest: '/home/osmc/TV Shows/Netflix' }
+  loop: "{{ links }}"

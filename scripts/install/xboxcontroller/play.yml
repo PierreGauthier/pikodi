@@ -15,8 +15,6 @@
     mode: 0755
 
 - name: Install xbox controller (4/4)
-  command : /usr/sbin/update-rc.d xboxdrv defaults
-
-- service:
+  service:
     name: xboxdrv
-    state: restarted
+    enabled: yes

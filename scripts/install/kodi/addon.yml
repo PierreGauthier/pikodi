@@ -35,39 +35,35 @@
     dest: "/home/osmc/.kodi/addons/packages/"
   when: plugin_folder.stat.exists == false
 
-- name: "Debug Install {{addon.name}} (1/4)"
-  get_url:
-    url: "{{addon.url}}"
-    dest: "/home/osmc/"
+- name: "Install {{addon.name}} (2/4)"
+  unarchive:
+    src: "/home/osmc/.kodi/addons/packages/{{addon.zip_name}}.zip"
+    dest: /home/osmc/.kodi/addons/
+    remote_src: yes
+  when: plugin_folder.stat.exists == false
 
-# - name: "Install {{addon.name}} (2/4)"
-#   unarchive:
-#     src: "/home/osmc/.kodi/addons/packages/{{addon.zip_name}}.zip"
-#     dest: /home/osmc/.kodi/addons/
-#     remote_src: yes
-#   when: plugin_folder.stat.exists == false
+- name: "Install {{addon.name}} (2'/4)"
+  stat:
+    path: "/home/osmc/.kodi/addons/{{addon.zip_name}}"
+  register: zip_name
 
-# - name: "Install {{addon.name}} (2'/4)"
-#   stat:
-#     path: "/home/osmc/.kodi/addons/{{addon.zip_name}}"
-#   register: zip_name
-#
-# - name: "Install {{addon.name}} (2''/4)"
-#   command: "mv /home/osmc/.kodi/addons/{{addon.zip_name}} /home/osmc/.kodi/addons/{{addon.code}}"
-#   when: zip_name.stat.exists and addon.zip_name != addon.code
-#
-# - name: "Install {{addon.name}} (3/4)"
-#   file:
-#     path: "/home/osmc/.kodi/addons/"
-#     owner: osmc
-#     group: osmc
-#     mode: 0755
-#     recurse: true
-#   when: plugin_folder.stat.exists == false
+- name: "Install {{addon.name}} (2''/4)"
+  command: "mv /home/osmc/.kodi/addons/{{addon.zip_name}} /home/osmc/.kodi/addons/{{addon.code}}"
+  when: zip_name.stat.exists and addon.zip_name != addon.code
+
+- name: "Install {{addon.name}} (3/4)"
+  file:
+    path: "/home/osmc/.kodi/addons/"
+    owner: osmc
+    group: osmc
+    mode: 0755
+    recurse: true
+  when: plugin_folder.stat.exists == false
 
 - name: "Install {{addon.name}} (4/4)"
   command: "kodi-send --action='InstallAddon({{addon.code}})'"
-#   when: plugin_folder.stat.exists == false
+  # when: plugin_folder.stat.exists == false
 
 - pause:
     prompt: "Please follow indication on kodi the install {{addon.name}}"
+  # when: plugin_folder.stat.exists == false

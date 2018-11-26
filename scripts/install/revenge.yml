@@ -7,23 +7,49 @@ revenge-group:
       ansible_password: osmc
 
   vars:
+
     requested_apt_packages:
       - python-crypto
       - build-essential
       - python-pip
       - virtualenv
       - unzip
+      - git
+
     requested_pip_packages:
       - setuptools
       - wheel
-      - pycryptodomex
+      # - pycryptodomex
+
+    links:
+      - "/media/E4F6D826F6D7F730:/home/osmc/dd"
+      - "/home/osmc/dd/Music:/home/osmc/Music"
+      - "/home/osmc/dd/Images:/home/osmc/Pictures"
+      - "/home/osmc/dd/Films:/home/osmc/Movies"
+      - "/home/osmc/dd/Series:/home/osmc/TV Shows"
+      - "/home/osmc/dd/Games/BIOS:/home/osmc/RetroPie/BIOS"
+      - "/home/osmc/dd/Games/gbc:/home/osmc/RetroPie/roms/gbc"
+      - "/home/osmc/dd/Games/gba:/home/osmc/RetroPie/roms/gba"
+      # - "/home/osmc/.kodi/userdata/addon_data/plugin.video.netflix/shows/:/home/osmc/TV Shows/Netflix"
+
     addons:
+      - name:     soundcloud
+        url:      http://mirrors.kodi.tv/addons/krypton/plugin.audio.soundcloud/plugin.audio.soundcloud-2.0.6.zip
+        code:     plugin.audio.soundcloud
+        zip_name: plugin.audio.soundcloud-2.0.6
+
+      - name:     tunein
+        url:      https://github.com/LazarusProject/repo/raw/master/plugin.audio.tuneinradio/plugin.audio.tuneinradio-3.0.0.zip
+        code:     plugin.audio.tuneinradio
+        zip_name: plugin.audio.tuneinradio-3.0.0
+
       - name:     youtube
         url:      http://mirrors.kodi.tv/addons/krypton/plugin.video.youtube/plugin.video.youtube-6.2.2.zip
         code:     plugin.video.youtube
         zip_name: plugin.video.youtube-6.2.2
         additionnal_cmds:
           - kodi-send --action="ActivateWindow(Videos, plugin://plugin.video.youtube/sign-in)"
+
       - name:     netflix
         url:      https://github.com/asciidisco/plugin.video.netflix/archive/0.13.17.zip
         code:     plugin.video.netflix

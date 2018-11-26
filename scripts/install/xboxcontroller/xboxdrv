@@ -1,14 +1,22 @@
 #!/bin/sh
 # /etc/init.d/xboxdrv
-#
+### BEGIN INIT INFO
+# Provides:          my-service-name
+# Required-Start:    $all
+# Required-Stop:
+# Default-Start:     2 3 4 5
+# Default-Stop:
+# Short-Description: your description here
+### END INIT INFO
 
-# Carry out specific functions when asked to by the system
 case "$1" in
 start)
     sudo rmmod xpad
     sudo modprobe uinput
     sudo modprobe joydev
-    sudo /usr/bin/xboxdrv --led 0 --config /home/osmc/xbmc.ini --silent --autofire RT=25 --autofire LT=25 --autofire du=200 --autofire dd=200 --autofire dl=500 --autofire dr=500 &
+    sudo /usr/bin/xboxdrv --config /home/osmc/xbmc.ini --detach-kernel-driver --id 0 --led 0 --silent & sleep 1
+    sudo /usr/bin/xboxdrv --config /home/osmc/xbmc.ini --detach-kernel-driver --id 1 --led 3 --silent & sleep 1
+    exit 0
     ;;
 stop)
     killall xboxdrv

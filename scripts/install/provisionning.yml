@@ -7,46 +7,37 @@
     PATH: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
   tasks:
-    
-    # - include: /src/kodi/get_version.yml
-    # - include: /src/kodi/alpha_18.yml
-    #   when: kodi_version is version('18', '<')
 
-    # - name: "Install docker"
-    #   apt:
-    #     name: docker
+    - include: /src/kodi/get_version.yml
+    - include: /src/kodi/alpha_18.yml
+      when: kodi_version is version('18', '<')
 
-    # - name: Install dependecies (1/2)
-    #   apt:
-    #     name: "{{requested_apt_packages}}"
-    # - name: Install dependecies (2/2)
-    #   pip:
-    #     name: "{{requested_pip_packages}}"
-    #     state: latest
+    - name: "Install docker"
+      apt:
+        name: docker
 
-    # - include: /src/xboxcontroller/play.yml
+    - name: Install dependecies (1/3)
+      apt:
+        name: "{{requested_apt_packages}}"
+    - name: Install dependecies (2/3)
+      pip:
+        name: setuptools
+        state: latest
+    - name: Install dependecies (3/3)
+      pip:
+        name: "{{requested_pip_packages}}"
+        state: latest
 
-    # - include: /src/linkdd/play.yml
+    - include: /src/xboxcontroller/play.yml
 
-    - include: /src/retropi/play.yml
+    - include: /src/linkdd/play.yml
 
-    # - name: "Install Addons"
-    #   include: /src/addon/play.yml
-    #   loop: "{{addons}}"
-    #   loop_control:
-    #     loop_var: addon
+    - include: /src/retropie/play.yml
 
-    # - name: "Restart raspberry"
-    #   shell: "sleep 5 && /sbin/reboot"
-    #   async: true
-    #   poll: 0
-    #
-    # - pause:
-    #     minutes: 2
+    - name: "Install Addons"
+      include: /src/kodi/addon.yml
+      loop: "{{addons}}"
+      loop_control:
+        loop_var: addon
 
-    # - name: Waiting for the raspberry to boot ...
-    #   wait_for_connection:
-    #     connect_timeout: 20
-    #     sleep: 5
-    #     delay: 5
-    #     timeout: 2000
+    - include: /src/kodi/reboot.yml

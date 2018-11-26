@@ -1,0 +1,5 @@
+---
+- name: Install souces
+  copy:
+    src: /src/sources/sources.xml
+    dest: /home/osmc/.kodi/userdata/sources.xml
